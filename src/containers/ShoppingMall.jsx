@@ -29,16 +29,17 @@ class ShoppingMall extends React.Component {
       .then(res => {
         console.log(res);
         if (res.status === 200) {
-          _this.setState({ adBanner: "1121212" });
-          // category: res.data.data.category,
-          //   adBanner: res.data.data.advertesPicture.PICTURE_ADDRESS,
-          //     bannerPicArr: res.data.data.slides,
-          //       recommendGoods: res.data.data.recommend,
-          //         floor1: res.data.data.floor1,
-          //           floor2: res.data.data.floor2,
-          //             floor3: res.data.data.floor3,
-          //               floorName: res.data.data.floorName,
-          //                 hotGoods: res.data.data.hotGoods
+          _this.setState({
+            category: res.data.data.category,
+            adBanner: res.data.data.advertesPicture.PICTURE_ADDRESS,
+            bannerPicArr: res.data.data.slides,
+            recommendGoods: res.data.data.recommend,
+            floor1: res.data.data.floor1,
+            floor2: res.data.data.floor2,
+            floor3: res.data.data.floor3,
+            floorName: res.data.data.floorName,
+            hotGoods: res.data.data.hotGoods
+          });
         }
       })
       .catch(err => {
@@ -48,6 +49,7 @@ class ShoppingMall extends React.Component {
   render() {
     return (
       <div className={classes.ShoppingMall}>
+        {/* searchBar */}
         <div className={classes.searchBar}>
           <div className={classes.locationDiv}>
             <img
@@ -66,11 +68,12 @@ class ShoppingMall extends React.Component {
             </Button>
           </div>
         </div>
+        {/* swiper */}
 
         <div className="swiperArea">
-          <WingBlank>
+          {/* <WingBlank>
             <Carousel infinite />
-          </WingBlank>
+          </WingBlank> */}
         </div>
       </div>
     );
