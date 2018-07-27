@@ -14,6 +14,6 @@ yarn start
 
 # build for production with minification
 yarn build
-
+```
 > <a href='https://github.com/jgchenu/Mobile-electricity-provider2' blank>vue+koa2+mongodb版本传送门<a>
 > <a href='https://github.com/jgchenu/Mobile-electricity-provider' blank>vue+koa2+mysql版本传送门<a>
