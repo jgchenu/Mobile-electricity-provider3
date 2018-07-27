@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
-
+import './style/App.scss';
 import {
   Button
 } from 'antd-mobile';
