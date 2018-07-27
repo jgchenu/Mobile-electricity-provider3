@@ -1,0 +1,7 @@
+@import './vars.scss';
+:global {
+  .App {
+    text-align: center;
+    background-color: $BgColor;
+  }
+}

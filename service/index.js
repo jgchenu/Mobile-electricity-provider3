@@ -39,6 +39,6 @@ app.use(router.allowedMethods())
 app.use(async (ctx) => {
   ctx.body = `<h1>Hello world</h1>`
 })
-app.listen(3000, () => {
+app.listen(3003, () => {
   console.log('listen 3000')
 })

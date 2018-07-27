@@ -1,0 +1,37 @@
+@import './vars.scss';
+.ShoppingMall {
+    .searchBar {
+        height: 2.2rem;
+        background-color: $IndexColor;
+        align-items: center;
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
+        .locationDiv {
+            flex: 3;
+            .locationIcon {
+                width: 1.6rem;
+                height: 1.6rem;
+                padding-top: 0.2rem;
+                padding-left: 0.3rem;
+            }
+        }
+        .inputDiv{
+            flex:16;
+            .searchInput {
+                width: 90%;
+                height: 1.3rem;
+                border: none;
+                border-bottom: 1px solid #ffffff;
+                background-color: $IndexColor;
+                color: #ffffff;
+            }
+        }
+        .buttonDiv{
+            flex:5;
+            .button{
+                width: 3.5rem;
+            }
+        }
+    }
+}
