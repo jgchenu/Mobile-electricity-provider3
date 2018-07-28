@@ -41,7 +41,6 @@ class ShoppingMall extends React.Component {
             floorName: res.data.data.floorName,
             hotGoods: res.data.data.hotGoods
           });
-          console.log(this.state.recommendGoods);
         }
       })
       .catch(err => {
@@ -117,7 +116,7 @@ class ShoppingMall extends React.Component {
           <div>
             <Carousel
               dots={false}
-              cellSpacing={10}
+              cellSpacing={5}
               slideWidth={0.8}
               autoplay={false}
               infinite
