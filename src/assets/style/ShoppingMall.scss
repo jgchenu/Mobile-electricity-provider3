@@ -16,8 +16,8 @@
                 padding-left: 0.3rem;
             }
         }
-        .inputDiv{
-            flex:16;
+        .inputDiv {
+            flex: 16;
             .searchInput {
                 width: 90%;
                 height: 1.3rem;
@@ -27,10 +27,55 @@
                 color: #ffffff;
             }
         }
-        .buttonDiv{
-            flex:5;
-            .button{
+        .buttonDiv {
+            flex: 5;
+            .button {
                 width: 3.5rem;
+            }
+        }
+    }
+    .swiperArea {
+        clear: both;
+        max-height: 12rem;
+        overflow: hidden;
+    }
+    .typeBar {
+        background-color: #ffffff;
+        margin: 0 0.3rem 0.3rem 0.3rem;
+        border-radius: 0.3rem;
+        font-size: 14px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        div {
+            padding: 0.3rem;
+            font-size: 12px;
+            text-align: center;
+            img {
+                width: 3rem;
+            }
+        }
+    }
+    .recommendArea {
+        background-color: #fff;
+        margin-top: 0.3rem;
+        .recommendTitle {
+            border-bottom: 1px solid #eeeeee;
+            font-size: 14px;
+            padding: 0.2rem;
+            color: $IndexColor;
+        }
+        .recommendBody {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            padding: 1rem .5rem;
+            justify-content: center;
+            align-items: center;
+            .recommendItem {
+                border-right: 1px solid #eee;
+                font-size: 10px;
+                text-align: center;
             }
         }
     }
