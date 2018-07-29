@@ -56,27 +56,17 @@
             }
         }
     }
-    .recommendArea {
-        background-color: #fff;
-        margin-top: 0.3rem;
-        .recommendTitle {
-            border-bottom: 1px solid #eeeeee;
-            font-size: 14px;
-            padding: 0.2rem;
-            color: $IndexColor;
+    .hotArea {
+        text-align: center;
+        font-size: 14px;
+        .hotTitle {
+            height: 1.8rem;
+            line-height: 1.8rem;
         }
-        .recommendBody {
+        .hotGoods{
             display: flex;
             flex-direction: row;
-            flex-wrap: nowrap;
-            padding: 1rem 0;
-            justify-content: center;
-            align-items: center;
-            .recommendItem {
-                border-right: 1px solid #eee;
-                font-size: 10px;
-                text-align: center;
-            }
+            flex-wrap: wrap;
         }
     }
 }

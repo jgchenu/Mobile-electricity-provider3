@@ -3,9 +3,10 @@ import locationIcon from "../assets/images/location.png";
 import url from "../serviceAPI.config";
 import classes from "../assets/style/ShoppingMall.scss";
 import { Button, Carousel } from "antd-mobile";
-import sortArr from "../utils/sortArr";
-import { toMoney } from "../utils/filter";
-// import axios from "axios";
+import Swiper from "../components/Swiper";
+import Floor from "../components/Floor";
+import GoodInfo from "../components/GoodInfo";
+
 class ShoppingMall extends React.Component {
   constructor() {
     super();
@@ -20,7 +21,6 @@ class ShoppingMall extends React.Component {
       floorName: {},
       hotGoods: []
     };
-    console.log(this);
   }
   componentDidMount() {
     React.$axios({
@@ -34,7 +34,7 @@ class ShoppingMall extends React.Component {
             category: res.data.data.category,
             adBanner: res.data.data.advertesPicture.PICTURE_ADDRESS,
             bannerPicArr: res.data.data.slides,
-            recommendGoods: sortArr(res.data.data.recommend),
+            recommendGoods: res.data.data.recommend,
             floor1: res.data.data.floor1,
             floor2: res.data.data.floor2,
             floor3: res.data.data.floor3,
@@ -48,17 +48,11 @@ class ShoppingMall extends React.Component {
       });
   }
   render() {
-    return (
-      <div className={classes.ShoppingMall}>
+    return <div className={classes.ShoppingMall}>
         {/* searchBar */}
         <div className={classes.searchBar}>
           <div className={classes.locationDiv}>
-            <img
-              src={locationIcon}
-              alt="location"
-              width="100%"
-              className={classes.locationIcon}
-            />
+            <img src={locationIcon} alt="location" width="100%" className={classes.locationIcon} />
           </div>
           <div className={classes.inputDiv}>
             <input type="text" className={classes.searchInput} />
@@ -97,12 +91,10 @@ class ShoppingMall extends React.Component {
 
         <div className={classes.typeBar}>
           {this.state.category.map((cate, index) => {
-            return (
-              <div key={index}>
+            return <div key={index}>
                 <img src={cate.image} alt="类型图" />
                 <span>{cate.mallCategoryName}</span>
-              </div>
-            );
+              </div>;
           })}
         </div>
 
@@ -111,55 +103,24 @@ class ShoppingMall extends React.Component {
           <img src={this.state.adBanner} alt="adbanner" width="100%" />
         </div>
         {/* recommend goods */}
-        <div className={classes.recommendArea}>
-          <div className={classes.recommendTitle}>商品推荐</div>
-          <div>
-            <Carousel
-              dots={false}
-              cellSpacing={5}
-              slideWidth={0.8}
-              autoplay={false}
-              infinite
-              afterChange={index => this.setState({ slideIndex: index })}
-            >
-              {this.state.recommendGoods.map((val, index) => {
-                return (
-                  <div
-                    className={classes.recommendBody}
-                    key={index}
-                    style={{
-                      position: "relative",
-                      top: this.state.slideIndex === index ? -10 : 10,
-                      oxShadow: "2px 1px 1px rgba(0, 0, 0, 0.2)",
-                      height: this.state.recommendHeight
-                    }}
-                    onLoad={() => {
-                      // fire window resize event to change height
-                      window.dispatchEvent(new Event("resize"));
-                      this.setState({
-                        recommendHeight: "auto"
-                      });
-                    }}
-                  >
-                    {val.map((item, num) => {
-                      return (
-                        <div key={num} className={classes.recommendItem}>
-                          <img src={item.image} width="80%" alt="推荐商品" />
-                          <div>{item.goodsName}</div>
-                          <div>
-                            ￥{toMoney(item.price)}(￥{toMoney(item.mallPrice)})
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                );
-              })}
-            </Carousel>
+        <Swiper swiperArr={this.state.recommendGoods} />
+
+        {/* floor */}
+        <Floor floorData={this.state.floor1} floorTitle={this.state.floorName.floor1} />
+        <Floor floorData={this.state.floor2} floorTitle={this.state.floorName.floor2} />
+        <Floor floorData={this.state.floor3} floorTitle={this.state.floorName.floor3} />
+
+        {/* hot-area */}
+
+        <div className={classes.hotArea}>
+          <div className={classes.hotTitle}>热卖商品</div>
+          <div className={classes.hotGoods}>
+            {this.state.hotGoods.map((item, index) => {
+              return <GoodInfo goodImage={item.image} goodName={item.name} goodPrice={item.price} goodId={item.goodsId} key={index} />;
+            })}
           </div>
         </div>
-      </div>
-    );
+      </div>;
   }
 }
 

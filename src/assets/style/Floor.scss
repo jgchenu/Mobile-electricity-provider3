@@ -1,0 +1,38 @@
+.floor {
+    .floorTitle {
+        text-align: center;
+        font-size: 14px;
+        height: 1.8rem;
+        line-height: 1.8rem;
+    }
+    .floorAnomaly {
+        display: flex;
+        flex-direction: row;
+        background-color: #fff;
+        border-bottom: 1px solid #ddd;
+        .floorItem {
+            width: 10rem;
+            box-sizing: border-box;
+        }
+        .floorOne {
+            border-right: 1px solid #ddd;
+        }
+        .floorTwo {
+            border-bottom: 1px solid #ddd;
+        }
+    }
+    .floorRule {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        background-color: #fff;
+        div {
+            box-sizing: border-box;
+            width: 10rem;
+            border-bottom: 1px solid #ddd;
+            &:nth-of-type(odd) {
+                border-right: 1px solid #ddd;
+            }
+        }
+    }
+}
