@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "../assets/style/Floor.scss";
+import classes from "./index.scss";
 class Floor extends React.Component {
   render() {
     return (

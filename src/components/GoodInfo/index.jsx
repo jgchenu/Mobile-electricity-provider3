@@ -1,7 +1,7 @@
 import React from "react";
-import { toMoney } from "../utils/filter";
-import history from "../router/history";
-import classes from "../assets/style/GoodInfo.scss";
+import { toMoney } from "../../utils/filter";
+import history from "./../../router/history";
+import classes from "./index.scss";
 class GoodInfo extends React.Component {
   goGoodPage(id) {
     history.push(`/detail/${id}`);

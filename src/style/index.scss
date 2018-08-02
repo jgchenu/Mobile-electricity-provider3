@@ -1,0 +1,13 @@
+:global {
+  body {
+    touch-action: none;
+  }
+  .am-tabs-default-bar-tab {
+    line-height:27px !important;
+    vertical-align: middle !important;
+    display: inline-block !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+}

@@ -1,8 +1,8 @@
 import React from "react";
 import { Carousel } from "antd-mobile";
-import { toMoney } from "../utils/filter";
-import sortArr from "../utils/sortArr";
-import classes from "../assets/style/Swiper.scss";
+import { toMoney } from "./../../utils/filter";
+import sortArr from "./../../utils/sortArr";
+import classes from "./index.scss";
 class Swiper extends React.Component {
   constructor() {
     super();

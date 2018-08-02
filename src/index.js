@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './assets/style/index.scss';
-import App from './containers/App.jsx';
+import './style/index.scss';
+import IRouter from './router.jsx';
 
 import axios from 'axios'
 React.$axios=axios
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<IRouter />, document.getElementById('root'));
 

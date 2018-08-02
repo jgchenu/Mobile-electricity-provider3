@@ -1,0 +1,49 @@
+@import "../../style/vars.scss";
+.categoryList {
+    .wrap {
+        display: flex;
+        flex-direction: row;
+        .leftNav {
+            width: 6rem;
+            background-color: aliceblue;
+            ul {
+                padding: 0;
+                margin: 0;
+                li {
+                    list-style: none;
+                    line-height: 2rem;
+                    border-bottom: 1px solid #e4e7ed;
+                    font-size: 0.8rem;
+                    padding: 3px;
+                    text-align: center;
+                }
+                .categoryActive {
+                    background-color: #ffffff;
+                }
+            }
+        }
+        .rightContent {
+              width: 14rem;
+            #list {
+                overflow: scroll;
+
+                .listItem {
+                    display: flex;
+                    flex-direction: row;
+                    font-size: 0.8rem;
+                    border-bottom: 1px solid #f0f0f0;
+                    background-color: #ffffff;
+                    padding: 5px;
+                    .listItemImage {
+                        flex: 8;
+                    }
+                    .listItemText {
+                        flex: 16;
+                        margin-top: 10px;
+                        margin-left: 10px;
+                    }
+                }
+            }
+        }
+    }
+}

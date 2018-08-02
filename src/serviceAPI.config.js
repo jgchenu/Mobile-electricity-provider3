@@ -1,8 +1,9 @@
-const BASEURl = "https://easy-mock.com/mock/5b3f56f118892e144d79f944/SmileVue/";
+// const BASEURl = "https://easy-mock.com/mock/5b3f56f118892e144d79f944/SmileVue/";
+const BASEURL = 'https://api.myjson.com'
 const LOCALURL = 'http://localhost:3003/'
 const URL = {
-  getShoppingMallInfo: BASEURl + 'index', //商城首页所有信息
-  getGoodsInfo: BASEURl + 'getGoodsInfo',
+  getShoppingMallInfo: BASEURL + '/bins/1eakkw', //商城首页所有信息
+  getGoodsInfo: BASEURL + 'getGoodsInfo',
   registerUser: LOCALURL + 'user/register', //用户注册接口
   login: LOCALURL + 'user/login', //用户登录接口
   getDetailGoodsInfo: LOCALURL + 'goods/getDetailGoodsInfo', //获取商品详情
