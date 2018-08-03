@@ -7,6 +7,7 @@ import {
   ListView,
   PullToRefresh
 } from "antd-mobile";
+import errorimg from "../../resource/images/errorImg.jpg";
 import history from "./../../router/history";
 import url from "./../../serviceAPI.config";
 import classes from "./index.scss";
@@ -28,9 +29,11 @@ class CategoryList extends React.Component {
     this.getCategory();
   }
   clickCategory(index, categoryId) {
+    console.log(index, categoryId);
     this.setState({
       categoryIndex: index,
       page: 1,
+      active: 0,
       finished: false,
       goodList: []
     });
@@ -70,8 +73,10 @@ class CategoryList extends React.Component {
           this.setState({
             categorySub: res.data.message
           });
-          this.setState({ active: 0 });
-          this.categorySubId = this.state.categorySub[0].ID;
+          this.setState({
+            active: 0,
+            categorySubId: this.state.categorySub[0].ID
+          });
           console.log("categorySub:", res);
           this.getGoodList();
         }
@@ -90,20 +95,44 @@ class CategoryList extends React.Component {
       }
     })
       .then(res => {
-        // console.log('goodList:',res);
+        console.log("goodList:", res);
         if (res.data.code === 200 && res.data.message.length) {
-          this.page++;
-          this.goodList = this.goodList.concat(res.data.message);
-          console.log("goodList:", this.goodList);
+          this.setState({
+            page: this.state.page + 1,
+            goodList: this.state.goodList.concat(res.data.message)
+          });
+          console.log("goodList:", this.state.goodList);
         } else {
-          this.finished = true;
+          this.setState({
+            finished: true,
+            loading: false
+          });
         }
-        this.loading = false;
         // console.log(this.finished);
       })
       .catch(err => {
         console.log(err);
       });
+  }
+  onClickCategorySub(data, index) {
+    console.log(index, data, this.state.categorySubId);
+    this.setState({
+      categorySubId: this.state.categorySub[index].ID,
+      goodList: [],
+      finished: false,
+      page: 1
+    });
+    this.loadMore();
+  }
+  loadMore() {
+    setTimeout(() => {
+      this.setState({
+        categorySubId: this.state.categorySubId
+          ? this.state.categorySubId
+          : this.state.categorySub[0].ID
+      });
+      this.getGoodList();
+    }, 1000);
   }
   render() {
     const tabs = [
@@ -149,8 +178,8 @@ class CategoryList extends React.Component {
           </div>
 
           <div className={classes.rightContent}>
-            <div id="list">
-              <div className="categorySub">
+            <div className={classes.list}>
+              <div className={classes.categorySub}>
                 <Tabs
                   tabs={this.state.categorySub.map(function(item) {
                     return {
@@ -163,17 +192,31 @@ class CategoryList extends React.Component {
                   initialPage={this.state.active}
                   animated={true}
                   useOnPan={true}
+                  onChange={this.onClickCategorySub.bind(this)}
                 >
                   <div
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      height: document.documentElement.clientHeight-88.5,
-                      backgroundColor: "#fff"
+                      height: document.documentElement.clientHeight - 88.5
                     }}
                   >
-                    Content of first tab
+                    {this.state.goodList.map((item, index) => (
+                      <div className={classes.listItem} key={index}>
+                        <div className={classes.listItemImage}>
+                          <img
+                            src={item.IMAGE1}
+                            alt="商品图片"
+                            width="100%"
+                            onError={function(e) {
+                              e.target.src = errorimg;
+                            }}
+                          />
+                        </div>
+                        <div className={classes.listItemText}>
+                          <div>{item.NAME}</div>
+                          <div>￥{item.ORI_PRICE}</div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </Tabs>
               </div>

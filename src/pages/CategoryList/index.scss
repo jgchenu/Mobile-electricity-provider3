@@ -24,8 +24,8 @@
         }
         .rightContent {
               width: 14rem;
-            #list {
-                overflow: scroll;
+            .list {
+                overflow: auto;
 
                 .listItem {
                     display: flex;
