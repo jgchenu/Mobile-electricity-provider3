@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Tabs,
-  Toast,
-  NavBar,
-  Icon,
-  ListView,
-  PullToRefresh
-} from "antd-mobile";
+import { Tabs, Toast, NavBar, Icon, PullToRefresh } from "antd-mobile";
 import errorimg from "../../resource/images/errorImg.jpg";
 import history from "./../../router/history";
 import url from "./../../serviceAPI.config";
@@ -134,15 +127,19 @@ class CategoryList extends React.Component {
       this.getGoodList();
     }, 1000);
   }
+  onRefresh() {
+    setTimeout(() => {
+      this.setState({
+        isRefresh: false,
+        finished: false,
+        goodList: [],
+        page: 1
+      });
+
+      this.loadMore();
+    }, 500);
+  }
   render() {
-    const tabs = [
-      { title: "FirstTab" },
-      { title: "SecondTab" },
-      { title: "ThirdTab" },
-      { title: "ThirdTab" },
-      { title: "ThirdTab" },
-      { title: "ThirdTab" }
-    ];
     return (
       <div className={classes.categoryList}>
         <NavBar
@@ -194,30 +191,38 @@ class CategoryList extends React.Component {
                   useOnPan={true}
                   onChange={this.onClickCategorySub.bind(this)}
                 >
-                  <div
+                  <PullToRefresh
+                    damping={20}
+                    ref={el => (this.ptr = el)}
                     style={{
-                      height: document.documentElement.clientHeight - 88.5
+                      height: document.documentElement.clientHeight - 88.5,
+                      overflow: "auto"
                     }}
+                    direction={"down"}
+                    refreshing={this.state.loading}
+                    onRefresh={this.onRefresh.bind(this)}
                   >
-                    {this.state.goodList.map((item, index) => (
-                      <div className={classes.listItem} key={index}>
-                        <div className={classes.listItemImage}>
-                          <img
-                            src={item.IMAGE1}
-                            alt="商品图片"
-                            width="100%"
-                            onError={function(e) {
-                              e.target.src = errorimg;
-                            }}
-                          />
+                    <div>
+                      {this.state.goodList.map((item, index) => (
+                        <div className={classes.listItem} key={index}>
+                          <div className={classes.listItemImage}>
+                            <img
+                              src={item.IMAGE1}
+                              alt="商品图片"
+                              width="100%"
+                              onError={function(e) {
+                                e.target.src = errorimg;
+                              }}
+                            />
+                          </div>
+                          <div className={classes.listItemText}>
+                            <div>{item.NAME}</div>
+                            <div>￥{item.ORI_PRICE}</div>
+                          </div>
                         </div>
-                        <div className={classes.listItemText}>
-                          <div>{item.NAME}</div>
-                          <div>￥{item.ORI_PRICE}</div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
+                  </PullToRefresh>
                 </Tabs>
               </div>
             </div>
