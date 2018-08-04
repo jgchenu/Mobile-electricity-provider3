@@ -1,26 +1,50 @@
 import React from "react";
-import { Tabs, Toast, NavBar, Icon, PullToRefresh } from "antd-mobile";
+import {
+  Tabs,
+  Toast,
+  NavBar,
+  Icon,
+  PullToRefresh,
+  ListView
+} from "antd-mobile";
 import errorimg from "../../resource/images/errorImg.jpg";
 import history from "./../../router/history";
 import url from "./../../serviceAPI.config";
 import classes from "./index.scss";
 class CategoryList extends React.Component {
-  state = {
-    category: [],
-    categoryIndex: 0,
-    categorySub: [],
-    active: 0, //激活标签,
-    loading: false,
-    finished: false, //上拉加载是否有数据
-    isRefresh: false, //下拉刷新
-    page: 1, //商品列表的页数
-    goodList: [], //商品信息
-    categorySubId: "", //商品子分类ID
-    errorImg: 'this.src="' + require("../../resource/images/errorImg.jpg") + '"'
-  };
+  constructor() {
+    super();
+    const dataSource = new ListView.DataSource({
+      rowHasChanged: (row1, row2) => row1 !== row2
+    });
+    this.state = {
+      pageSize: 10,
+      category: [],
+      categoryIndex: 0,
+      categorySub: [],
+      active: 0,
+      loading: false,
+      finished: false,
+      isRefresh: false,
+      page: 1,
+      goodList: [],
+      categorySubId: "",
+      errorImg:
+        'this.src="' + require("../../resource/images/errorImg.jpg") + '"',
+      dataSource
+    }; //激活标签, //上拉加载是否有数据 //下拉刷新 //商品列表的页数 //商品信息 //商品子分类ID
+  }
+
   componentDidMount() {
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(this.state.goodList)
+    });
     this.getCategory();
   }
+
+  onScroll = e => {
+    // console.log(e);
+  };
   clickCategory(index, categoryId) {
     console.log(index, categoryId);
     this.setState({
@@ -92,6 +116,11 @@ class CategoryList extends React.Component {
         if (res.data.code === 200 && res.data.message.length) {
           this.setState({
             page: this.state.page + 1,
+            dataSource: this.state.dataSource.cloneWithRows(
+              this.state.goodList.concat(res.data.message)
+            )
+          });
+          this.setState({
             goodList: this.state.goodList.concat(res.data.message)
           });
           console.log("goodList:", this.state.goodList);
@@ -113,7 +142,8 @@ class CategoryList extends React.Component {
       categorySubId: this.state.categorySub[index].ID,
       goodList: [],
       finished: false,
-      page: 1
+      page: 1,
+      active: index
     });
     this.loadMore();
   }
@@ -135,11 +165,31 @@ class CategoryList extends React.Component {
         goodList: [],
         page: 1
       });
-
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(this.state.goodList)
+      });
       this.loadMore();
     }, 500);
   }
   render() {
+    const row = item => (
+      <div className={classes.listItem} key={item.ID}>
+        <div className={classes.listItemImage}>
+          <img
+            src={item.IMAGE1}
+            alt="商品图片"
+            width="100%"
+            onError={function(e) {
+              e.target.src = errorimg;
+            }}
+          />
+        </div>
+        <div className={classes.listItemText}>
+          <div>{item.NAME}</div>
+          <div>￥{item.ORI_PRICE}</div>
+        </div>
+      </div>
+    );
     return (
       <div className={classes.categoryList}>
         <NavBar
@@ -186,43 +236,47 @@ class CategoryList extends React.Component {
                       SORT: item.SORT
                     };
                   })}
-                  initialPage={this.state.active}
+                  initialPage={0}
+                  page={this.state.active}
                   animated={true}
                   useOnPan={true}
                   onChange={this.onClickCategorySub.bind(this)}
                 >
-                  <PullToRefresh
-                    damping={20}
-                    ref={el => (this.ptr = el)}
+                  <ListView
+                    ref={el => (this.lv = el)}
+                    dataSource={this.state.dataSource}
+                    renderRow={row}
+                    initialListSize={this.state.pageSize}
+                    pageSize={this.state.pageSize}
                     style={{
-                      height: document.documentElement.clientHeight - 88.5,
-                      overflow: "auto"
+                      height: document.documentElement.clientHeight - 88.5
                     }}
-                    direction={"down"}
-                    refreshing={this.state.loading}
-                    onRefresh={this.onRefresh.bind(this)}
-                  >
-                    <div>
-                      {this.state.goodList.map((item, index) => (
-                        <div className={classes.listItem} key={index}>
-                          <div className={classes.listItemImage}>
-                            <img
-                              src={item.IMAGE1}
-                              alt="商品图片"
-                              width="100%"
-                              onError={function(e) {
-                                e.target.src = errorimg;
-                              }}
-                            />
-                          </div>
-                          <div className={classes.listItemText}>
-                            <div>{item.NAME}</div>
-                            <div>￥{item.ORI_PRICE}</div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </PullToRefresh>
+                    scrollerOptions={{ scrollbars: true }}
+                    pullToRefresh={
+                      <PullToRefresh
+                        damping={60}
+                        ref={el => (this.ptr = el)}
+                        style={{
+                          height: document.documentElement.clientHeight - 88.5,
+                          overflow: "auto"
+                        }}
+                        direction={"down"}
+                        refreshing={this.state.loading}
+                        onRefresh={this.onRefresh.bind(this)}
+                      />
+                    }
+  
+                    scrollRenderAheadDistance={200}
+                    onEndReached={this.loadMore.bind(this)}
+                    onEndReachedThreshold={20}
+                    renderFooter={() => (
+                      <p>
+                        {!this.state.finished
+                          ? "正在加载更多的数据..."
+                          : "已经全部加载完毕"}
+                      </p>
+                    )}
+                  />
                 </Tabs>
               </div>
             </div>
