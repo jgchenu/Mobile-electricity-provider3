@@ -6,6 +6,7 @@ import ShoppingMall from "./pages/ShoppingMall";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CategoryList from "./pages/CategoryList";
+import Goods from "./pages/Goods";
 import { Router, Route, Switch } from "react-router-dom";
 
 class IRouter extends React.Component {
@@ -18,6 +19,8 @@ class IRouter extends React.Component {
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/categoryList" component={CategoryList} />
+            <Route path="/goods/:goodId" component={Goods} />
+
             <Route path="/*" component={NotFound} />
           </Switch>
         </Router>

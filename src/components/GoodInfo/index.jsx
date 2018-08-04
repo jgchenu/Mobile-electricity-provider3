@@ -4,7 +4,7 @@ import history from "./../../router/history";
 import classes from "./index.scss";
 class GoodInfo extends React.Component {
   goGoodPage(id) {
-    history.push(`/detail/${id}`);
+    history.push(`/goods/${id}`);
   }
 
   render() {
