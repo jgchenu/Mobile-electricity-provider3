@@ -157,6 +157,7 @@ class CategoryList extends React.Component {
       this.getGoodList();
     }, 1000);
   }
+
   onRefresh() {
     setTimeout(() => {
       this.setState({
@@ -171,9 +172,17 @@ class CategoryList extends React.Component {
       this.loadMore();
     }, 500);
   }
+  //跳转到商品详情页
+  goGoodsInfo(id) {
+    history.push(`/goods/${id}`);
+  }
   render() {
     const row = item => (
-      <div className={classes.listItem} key={item.ID}>
+      <div
+        className={classes.listItem}
+        key={item.ID}
+        onClick={this.goGoodsInfo.bind(this,item.ID)}
+      >
         <div className={classes.listItemImage}>
           <img
             src={item.IMAGE1}
@@ -190,23 +199,13 @@ class CategoryList extends React.Component {
         </div>
       </div>
     );
-    return (
-      <div className={classes.categoryList}>
-        <NavBar
-          mode="dark"
-          icon={<Icon type="left" />}
-          leftContent="返回"
-          onLeftClick={() => history.push("/")}
-        >
+    return <div className={classes.categoryList}>
+        <NavBar mode="dark" icon={<Icon type="left" />} leftContent="返回" onLeftClick={() => history.goBack()}>
           商品详情
         </NavBar>
 
         <div className={classes.wrap}>
-          <div
-            className={classes.leftNav}
-            id="leftNav"
-            style={{ height: document.documentElement.clientHeight - 45 }}
-          >
+          <div className={classes.leftNav} id="leftNav" style={{ height: document.documentElement.clientHeight - 45 }}>
             <ul>
               {this.state.category.map((item, index) => (
                 <li
@@ -227,63 +226,21 @@ class CategoryList extends React.Component {
           <div className={classes.rightContent}>
             <div className={classes.list}>
               <div className={classes.categorySub}>
-                <Tabs
-                  tabs={this.state.categorySub.map(function(item) {
-                    return {
-                      title: item.MALL_SUB_NAME,
-                      ID: item.ID,
-                      MALL_CATEGORY_ID: item.MALL_CATEGORY_ID,
-                      SORT: item.SORT
-                    };
-                  })}
-                  initialPage={0}
-                  page={this.state.active}
-                  animated={true}
-                  useOnPan={true}
-                  onChange={this.onClickCategorySub.bind(this)}
-                >
-                  <ListView
-                    ref={el => (this.lv = el)}
-                    dataSource={this.state.dataSource}
-                    renderRow={row}
-                    initialListSize={this.state.pageSize}
-                    pageSize={this.state.pageSize}
-                    style={{
-                      height: document.documentElement.clientHeight - 88.5
-                    }}
-                    scrollerOptions={{ scrollbars: true }}
-                    pullToRefresh={
-                      <PullToRefresh
-                        damping={60}
-                        ref={el => (this.ptr = el)}
-                        style={{
-                          height: document.documentElement.clientHeight - 88.5,
-                          overflow: "auto"
-                        }}
-                        direction={"down"}
-                        refreshing={this.state.loading}
-                        onRefresh={this.onRefresh.bind(this)}
-                      />
-                    }
-  
-                    scrollRenderAheadDistance={200}
-                    onEndReached={this.loadMore.bind(this)}
-                    onEndReachedThreshold={20}
-                    renderFooter={() => (
-                      <p>
+                <Tabs tabs={this.state.categorySub.map(function(item) {
+                    return { title: item.MALL_SUB_NAME, ID: item.ID, MALL_CATEGORY_ID: item.MALL_CATEGORY_ID, SORT: item.SORT };
+                  })} initialPage={0} page={this.state.active} animated={true} useOnPan={true} onChange={this.onClickCategorySub.bind(this)}>
+                  <ListView ref={el => (this.lv = el)} dataSource={this.state.dataSource} renderRow={row} initialListSize={this.state.pageSize} pageSize={this.state.pageSize} style={{ height: document.documentElement.clientHeight - 88.5 }} scrollerOptions={{ scrollbars: true }} pullToRefresh={<PullToRefresh damping={60} ref={el => (this.ptr = el)} style={{ height: document.documentElement.clientHeight - 88.5, overflow: "auto" }} direction={"down"} refreshing={this.state.loading} onRefresh={this.onRefresh.bind(this)} />} scrollRenderAheadDistance={200} onEndReached={this.loadMore.bind(this)} onEndReachedThreshold={20} renderFooter={() => <p
+                      >
                         {!this.state.finished
                           ? "正在加载更多的数据..."
                           : "已经全部加载完毕"}
-                      </p>
-                    )}
-                  />
+                      </p>} />
                 </Tabs>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      </div>;
   }
 }
 

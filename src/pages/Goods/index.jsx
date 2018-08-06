@@ -37,6 +37,29 @@ class Goods extends React.Component {
         console.log(err);
       });
   }
+  addGoodToCart() {
+    
+    let cartInfo = localStorage.cartInfo
+      ? JSON.parse(localStorage.cartInfo)
+      : [];
+    let isHaveGood = cartInfo.find(cart => cart.goodId === this.state.goodId);
+    console.log(this.state.goodId,isHaveGood)
+    if (!isHaveGood) {
+      let newCartInfo = {
+        goodId: this.state.goodsInfo.ID,
+        name: this.state.goodsInfo.NAME,
+        price: this.state.goodsInfo.PRESENT_PRICE,
+        image: this.state.goodsInfo.IMAGE1,
+        count: 1
+      };
+      cartInfo.push(newCartInfo);
+      localStorage.cartInfo = JSON.stringify(cartInfo);
+      Toast.success("添加成功");
+    } else {
+      Toast.success("已经有此商品了");
+    }
+    history.push("/cart");
+  }
   render() {
     function renderTabBar(props) {
       return (
@@ -49,15 +72,9 @@ class Goods extends React.Component {
         </Sticky>
       );
     }
-    return (
-      <div className={classes.goods}>
+    return <div className={classes.goods}>
         <div className={classes.navBar}>
-          <NavBar
-            mode="light"
-            icon={<Icon type="left" />}
-            leftContent="返回"
-            onLeftClick={() => history.push("/")}
-          >
+          <NavBar mode="light" icon={<Icon type="left" />} leftContent="返回" onLeftClick={() => history.goBack()}>
             商品详情
           </NavBar>
         </div>
@@ -70,26 +87,9 @@ class Goods extends React.Component {
         </div>
         <div>
           <StickyContainer>
-            <Tabs
-              tabs={[{ title: "商品详情" }, { title: "评论" }]}
-              initalPage={"t2"}
-              renderTabBar={renderTabBar}
-            >
-              <div
-                className={classes.detail}
-                dangerouslySetInnerHTML={{
-                  __html: this.state.goodsInfo.DETAIL
-                }}
-              />
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  height: "250px",
-                  backgroundColor: "#fff"
-                }}
-              >
+            <Tabs tabs={[{ title: "商品详情" }, { title: "评论" }]} initalPage={"t2"} renderTabBar={renderTabBar}>
+              <div className={classes.detail} dangerouslySetInnerHTML={{ __html: this.state.goodsInfo.DETAIL }} />
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "250px", backgroundColor: "#fff" }}>
                 评论制作中
               </div>
             </Tabs>
@@ -97,14 +97,15 @@ class Goods extends React.Component {
         </div>
         <div className={classes.goodsBottom}>
           <div>
-            <Button type="primary">加入购物车</Button>
+            <Button type="primary" onClick={this.addGoodToCart.bind(this)}>
+              加入购物车
+            </Button>
           </div>
           <div>
             <Button type="warning">直接购买</Button>
           </div>
         </div>
-      </div>
-    );
+      </div>;
   }
 }
 

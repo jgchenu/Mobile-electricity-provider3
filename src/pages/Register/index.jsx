@@ -124,7 +124,7 @@ class Login extends React.Component {
           mode="light"
           icon={<Icon type="left" />}
           leftContent="返回"
-          onLeftClick={() => history.push("/")}
+          onLeftClick={() => history.goBack()}
         >
           用户注册
         </NavBar>

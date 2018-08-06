@@ -7,12 +7,12 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CategoryList from "./pages/CategoryList";
 import Goods from "./pages/Goods";
+import Cart from "./pages/Cart";
 import { Router, Route, Switch } from "react-router-dom";
 
 class IRouter extends React.Component {
   render() {
-    return (
-      <div className="App">
+    return <div className="App">
         <Router history={history}>
           <Switch>
             <Route exact path="/" component={ShoppingMall} />
@@ -20,12 +20,11 @@ class IRouter extends React.Component {
             <Route path="/register" component={Register} />
             <Route path="/categoryList" component={CategoryList} />
             <Route path="/goods/:goodId" component={Goods} />
-
+            <Route path="/cart" component={Cart} />
             <Route path="/*" component={NotFound} />
           </Switch>
         </Router>
-      </div>
-    );
+      </div>;
   }
 }
 

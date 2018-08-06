@@ -1,0 +1,34 @@
+.cartTitle {
+    height: 2rem;
+    line-height: 2rem;
+    text-align: right;
+    padding: 3px;
+    .Button {
+        vertical-align: middle;
+    }
+}
+
+.cartList {
+    background-color: #ffffff;
+    .cartRow {
+        padding: 8px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        border-bottom: 1px solid #ddd;
+        .goodImage {
+            flex: 6;
+            align-items: center;
+        }
+        .cartText {
+            flex: 14;
+            .goodControl{
+                padding-top: 20px;
+            }
+        }
+        .goodPrice {
+            flex: 4;
+        }
+    }
+}
