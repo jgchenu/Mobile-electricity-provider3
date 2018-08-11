@@ -205,7 +205,7 @@ class CategoryList extends React.Component {
         </NavBar>
 
         <div className={classes.wrap}>
-          <div className={classes.leftNav} id="leftNav" style={{ height: document.documentElement.clientHeight - 45 }}>
+          <div className={classes.leftNav} id="leftNav" style={{ height: document.documentElement.clientHeight - 45-50 }}>
             <ul>
               {this.state.category.map((item, index) => (
                 <li
@@ -229,7 +229,7 @@ class CategoryList extends React.Component {
                 <Tabs tabs={this.state.categorySub.map(function(item) {
                     return { title: item.MALL_SUB_NAME, ID: item.ID, MALL_CATEGORY_ID: item.MALL_CATEGORY_ID, SORT: item.SORT };
                   })} initialPage={0} page={this.state.active} animated={true} useOnPan={true} onChange={this.onClickCategorySub.bind(this)}>
-                  <ListView ref={el => (this.lv = el)} dataSource={this.state.dataSource} renderRow={row} initialListSize={this.state.pageSize} pageSize={this.state.pageSize} style={{ height: document.documentElement.clientHeight - 88.5 }} scrollerOptions={{ scrollbars: true }} pullToRefresh={<PullToRefresh damping={60} ref={el => (this.ptr = el)} style={{ height: document.documentElement.clientHeight - 88.5, overflow: "auto" }} direction={"down"} refreshing={this.state.loading} onRefresh={this.onRefresh.bind(this)} />} scrollRenderAheadDistance={200} onEndReached={this.loadMore.bind(this)} onEndReachedThreshold={20} renderFooter={() => <p
+                  <ListView ref={el => (this.lv = el)} dataSource={this.state.dataSource} renderRow={row} initialListSize={this.state.pageSize} pageSize={this.state.pageSize} style={{ height: document.documentElement.clientHeight - 88.5-50 }} scrollerOptions={{ scrollbars: true }} pullToRefresh={<PullToRefresh damping={60} ref={el => (this.ptr = el)} style={{ height: document.documentElement.clientHeight - 88.5-50, overflow: "auto" }} direction={"down"} refreshing={this.state.loading} onRefresh={this.onRefresh.bind(this)} />} scrollRenderAheadDistance={200} onEndReached={this.loadMore.bind(this)} onEndReachedThreshold={20} renderFooter={() => <p
                       >
                         {!this.state.finished
                           ? "正在加载更多的数据..."

@@ -1,3 +1,9 @@
+@import './../../style/vars.scss';
+.cart {
+    padding-bottom: 50px;
+    background-color: $cartBg;
+}
+
 .cartTitle {
     height: 2rem;
     line-height: 2rem;
@@ -23,12 +29,30 @@
         }
         .cartText {
             flex: 14;
-            .goodControl{
+            .goodControl {
                 padding-top: 20px;
             }
         }
         .goodPrice {
             flex: 4;
+            line-height: 26px;
+            .allPrice {
+                color: red;
+            }
         }
     }
+}
+
+.allMoney {
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 52px;
+    text-align: right;
+    padding-right: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 4px #eeeeee;
+    color: red;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
 }
